@@ -15,7 +15,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 
-import { Link as ReactLink } from 'react-router-dom';
+import { Link as ReactLink, NavLink } from 'react-router-dom';
 import {
   HamburgerIcon,
   CloseIcon,
@@ -23,6 +23,7 @@ import {
   SunIcon,
 } from '@chakra-ui/icons';
 import { GiTechnoHeart } from 'react-icons/gi';
+import PropTypes from 'prop-types';
 
 /* ------------------------------------------------------ */
 const Navbar = () => {
@@ -40,7 +41,9 @@ const Navbar = () => {
     },
   ];
 
-  const NavLink = ({ path, children }) => {
+  /* ------------------ NavLink Component ----------------- */
+  const NavLink = (props) => {
+    const { path, children } = props;
     return (
       <Link
         as={ReactLink}
@@ -59,6 +62,11 @@ const Navbar = () => {
     );
   };
 
+  NavLink.propTypes = {
+    path: PropTypes.string,
+    children: PropTypes.any,
+  };
+  /* ----------------------- return ----------------------- */
   return (
     <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
       <Flex h={16} alignItems="center" justifyContent="space-between">
