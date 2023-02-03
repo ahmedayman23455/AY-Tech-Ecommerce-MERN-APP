@@ -2,7 +2,7 @@ const factory = require('./factoryHandler');
 const Review = require('../models/reviewModel');
 /* ------------------------------------------------------ */
 exports.getAllReviews = factory.getAll(Review);
-exports.getReview = factory.getOne(Review, { path: 'reviews' });
+exports.getReview = factory.getOne(Review);
 
 exports.setProductsUserIds = (req, res, next) => {
   // Allow nested routes

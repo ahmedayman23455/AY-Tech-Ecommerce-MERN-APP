@@ -10,9 +10,9 @@ const handleCastErrorDB = (err) => {
 
 /* --------------- handleDuplicateFieldsDB -------------- */
 const handleDuplicateFieldsDB = (err) => {
-  const DuplicateFields = Object.values(err.keyValue).map(
-    (value) => `(${value})`,
-  );
+  const DuplicateFields = Object.values(
+    err.keyValue,
+  ).map((value) => `(${value})`);
 
   const message = `Duplicate field values: ${DuplicateFields.join(
     ' ',
@@ -23,20 +23,28 @@ const handleDuplicateFieldsDB = (err) => {
 
 /* -------------- handleVadlidationErrorDB -------------- */
 const handleVadlidationErrorDB = (err) => {
-  const errorsMessages = Object.values(err.errors).map(
-    (error) => error.message,
-  );
-  const message = `Invalid input data. ${errorsMessages.join('. ')}`;
+  const errorsMessages = Object.values(
+    err.errors,
+  ).map((error) => error.message);
+  const message = `Invalid input data. ${errorsMessages.join(
+    '. ',
+  )}`;
   return new AppError(message, 400);
 };
 
 /* ------------------- handleJWTError ------------------- */
 const handleJWTError = () =>
-  new AppError('Invalid token. Please log in again!', 401);
+  new AppError(
+    'Invalid token. Please log in again!',
+    401,
+  );
 
 /* ---------------- handleJWTExpiredError --------------- */
 const handleJWTExpiredError = () =>
-  new AppError('Your token has expired! Please log in again.', 401);
+  new AppError(
+    'Your token has expired! Please log in again.',
+    401,
+  );
 
 /* -------------------- sendErrorDev -------------------- */
 const sendErrorDev = (err, res) => {
@@ -74,11 +82,11 @@ module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
 
-  console.log(`🙂 ${err.isOperational}`);
-
   if (process.env.NODE_ENV === 'development') {
     sendErrorDev(err, res);
-  } else if (process.env.NODE_ENV === 'production') {
+  } else if (
+    process.env.NODE_ENV === 'production'
+  ) {
     let error = { ...err };
     // const errorName = err.name;
     // const errorCode = err.code;

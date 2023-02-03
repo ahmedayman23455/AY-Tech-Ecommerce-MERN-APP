@@ -1,6 +1,6 @@
 const express = require('express');
 const productController = require('../controllers/productController');
-const authController = require('../controllers/authController');
+// const authController = require('../controllers/authController');
 const reviewRoutes = require('./reviewRoutes');
 /* ------------------------------------------------------ */
 const router = express.Router();
@@ -9,11 +9,7 @@ router.use('/:productId/reviews', reviewRoutes);
 
 router
   .route('/')
-  .get(
-    authController.protect,
-    authController.restrictTo('user'),
-    productController.getAllProducts,
-  )
+  .get(productController.getAllProducts)
   .post(productController.createProduct);
 
 router

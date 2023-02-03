@@ -20,7 +20,7 @@ import { StarIcon } from '@chakra-ui/icons';
 import PropTypes from 'prop-types';
 
 /* ----------------------- Rating ----------------------- */
-const Rating = ({ rating, numReviews }) => {
+const Rating = ({ ratingsAverage, ratingsQuantity }) => {
   const [iconSize, setIconSize] = useState('14px');
   return (
     <Flex>
@@ -29,33 +29,35 @@ const Rating = ({ rating, numReviews }) => {
         <StarIcon
           size={iconSize}
           w="14px"
-          color={rating >= 2 ? 'orange.500' : 'grey.200'}
+          color={ratingsAverage >= 2 ? 'orange.500' : 'grey.200'}
         />
         <StarIcon
           size={iconSize}
           w="14px"
-          color={rating >= 3 ? 'orange.500' : 'grey.200'}
+          color={ratingsAverage >= 3 ? 'orange.500' : 'grey.200'}
         />
         <StarIcon
           size={iconSize}
           w="14px"
-          color={rating >= 4 ? 'orange.500' : 'grey.200'}
+          color={ratingsAverage >= 4 ? 'orange.500' : 'grey.200'}
         />
         <StarIcon
           size={iconSize}
           w="14px"
-          color={rating >= 5 ? 'orange.500' : 'grey.200'}
+          color={ratingsAverage >= 5 ? 'orange.500' : 'grey.200'}
         />
       </HStack>
       <Text fontSize="md" fontWeight="bold" ml="4px">
-        {`${numReviews} ${numReviews === 1 ? 'Review' : 'Reviews'}`}
+        {`${ratingsQuantity} ${
+          ratingsQuantity === 1 ? 'Review' : 'Reviews'
+        }`}
       </Text>
     </Flex>
   );
 };
 Rating.propTypes = {
-  rating: PropTypes.number,
-  numReviews: PropTypes.number,
+  ratingsAverage: PropTypes.number,
+  ratingsQuantity: PropTypes.number,
 };
 /* --------------------- ProductCard -------------------- */
 const ProductCard = ({ product }) => {
@@ -135,8 +137,8 @@ const ProductCard = ({ product }) => {
 
       <Flex justify="space-between" alignContent="center" py={2}>
         <Rating
-          rating={product.rating}
-          numReviews={product.numReviews}
+          ratingsAverage={product.ratingsAverage}
+          ratingsQuantity={product.ratingsQuantity}
         />
       </Flex>
 

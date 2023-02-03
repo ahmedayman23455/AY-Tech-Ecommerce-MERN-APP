@@ -18,7 +18,9 @@ exports.deleteOne = (Model) =>
       );
     }
 
-    res.status(204).json({ status: 'success', data: null });
+    res
+      .status(204)
+      .json({ status: 'success', data: null });
   });
 
 /* ---------------------- updateOne --------------------- */
@@ -42,18 +44,20 @@ exports.updateOne = (Model) =>
       );
     }
 
-    res
-      .status(200)
-      .json({ status: 'success', data: { data: doc } });
+    res.status(200).json({
+      status: 'success',
+      data: doc,
+    });
   });
 
 /* ---------------------- createOne --------------------- */
 exports.createOne = (Model) =>
   catchAsync(async (req, res) => {
     const doc = await Model.create(req.body);
-    res
-      .status(201)
-      .json({ status: 'success', data: { data: doc } });
+    res.status(201).json({
+      status: 'success',
+      data: doc,
+    });
   });
 
 /* ----------------------- getOne ----------------------- */
@@ -73,9 +77,10 @@ exports.getOne = (Model, populateOptions) =>
         ),
       );
     }
-    res
-      .status(200)
-      .json({ message: 'success', data: { data: doc } });
+    res.status(200).json({
+      message: 'success',
+      data: doc,
+    });
   });
 
 /* ----------------------- getAll ----------------------- */
@@ -104,6 +109,6 @@ exports.getAll = (Model) =>
     return res.status(200).json({
       status: 'success',
       results: doc.length,
-      data: { data: doc },
+      data: doc,
     });
   });

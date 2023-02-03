@@ -17,7 +17,10 @@ const userSchema = mongoose.Schema({
   },
   email: {
     type: String,
-    required: [true, 'Please provide your email!'],
+    required: [
+      true,
+      'Please provide your email!',
+    ],
     unique: true,
     trim: true,
     lowercase: true, // it is not validator. it transform the email to lowercase
@@ -37,7 +40,10 @@ const userSchema = mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, 'Please provide a password!'],
+    required: [
+      true,
+      'Please provide a password!',
+    ],
     minlength: [
       8,
       'A password must have more or equal than 8 characters or numbers',
@@ -46,7 +52,10 @@ const userSchema = mongoose.Schema({
   },
   passwordConfirm: {
     type: String,
-    required: [true, 'Please confirm your password'],
+    required: [
+      true,
+      'Please confirm your password',
+    ],
     validate: {
       validator: function (val) {
         return val === this.password;
@@ -65,13 +74,19 @@ userSchema.pre('save', async function (next) {
     return next();
   }
 
-  this.password = await bcrypt.hash(this.password, 12);
+  this.password = await bcrypt.hash(
+    this.password,
+    12,
+  );
   this.passwordConfirm = undefined;
   next();
 });
 
 userSchema.pre('save', async function (next) {
-  if (!this.isModified('password') || this.isNew) {
+  if (
+    !this.isModified('password') ||
+    this.isNew
+  ) {
     return next;
   }
   this.passwordChangedAt = Date.now() - 1000;
@@ -84,40 +99,46 @@ userSchema.pre(/^find/, function (next) {
 });
 
 /* ------------------ instance methods ------------------ */
-userSchema.methods.correctPassword = async function (
-  cadidatePassword,
-  userPassword,
-) {
-  return await bcrypt.compare(
+userSchema.methods.correctPassword =
+  async function (
     cadidatePassword,
     userPassword,
-  );
-};
-
-userSchema.methods.changedPasswordAfter = function (
-  JWTTimestamp,
-) {
-  if (this.passwordChangedAt) {
-    const passwordChangedTimestamp = parseInt(
-      this.passwordChangedAt.getTime() / 1000,
-      10,
+  ) {
+    return await bcrypt.compare(
+      cadidatePassword,
+      userPassword,
     );
-    return passwordChangedTimestamp > JWTTimestamp;
-  }
-  return false;
-};
+  };
 
-userSchema.methods.createPasswordResetToken = function () {
-  const resetToken = crypto.randomBytes(32).toString('hex');
-  this.passwordResetToken = crypto
-    .createHash('sha256')
-    .update(resetToken)
-    .digest('hex');
+userSchema.methods.changedPasswordAfter =
+  function (JWTTimestamp) {
+    if (this.passwordChangedAt) {
+      const passwordChangedTimestamp = parseInt(
+        this.passwordChangedAt.getTime() / 1000,
+        10,
+      );
+      return (
+        passwordChangedTimestamp > JWTTimestamp
+      );
+    }
+    return false;
+  };
 
-  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+userSchema.methods.createPasswordResetToken =
+  function () {
+    const resetToken = crypto
+      .randomBytes(32)
+      .toString('hex');
+    this.passwordResetToken = crypto
+      .createHash('sha256')
+      .update(resetToken)
+      .digest('hex');
 
-  return resetToken;
-};
+    this.passwordResetExpires =
+      Date.now() + 10 * 60 * 1000;
+
+    return resetToken;
+  };
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;

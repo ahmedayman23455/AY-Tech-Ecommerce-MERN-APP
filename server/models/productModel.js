@@ -4,36 +4,54 @@ const productSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, 'A product must have a name'],
+      required: [
+        true,
+        'A product must have a name',
+      ],
     },
     image: {
       type: String,
-      required: [true, ' A product must have an image'],
+      required: [
+        true,
+        ' A product must have an image',
+      ],
     },
     description: {
       type: String,
-      required: [true, ' A product must have an description'],
+      required: [
+        true,
+        ' A product must have an description',
+      ],
     },
     brand: {
       type: String,
-      required: [true, ' A product must have an brand'],
+      required: [
+        true,
+        ' A product must have an brand',
+      ],
     },
     category: {
       type: String,
-      required: [true, ' A product must have an category'],
+      required: [
+        true,
+        ' A product must have an category',
+      ],
     },
     price: {
       type: Number,
-      required: [true, 'A product must have a price'],
+      required: [
+        true,
+        'A product must have a price',
+      ],
     },
-    rating: {
+    ratingsAverage: {
       type: Number,
       default: 4.5,
       min: [1, 'Rating must be above 1.0'],
       max: [5, 'Rating must be below 5.0'],
       set: (val) => Math.round(val * 10) / 10,
     },
-    numReviews: {
+    ratingsQuantity: {
       type: Number,
       default: 0,
     },
@@ -56,9 +74,12 @@ const productSchema = new mongoose.Schema(
 
 productSchema.virtual('reviews', {
   ref: 'Review',
-  foreignField: 'zzz',
-  localField: '',
+  foreignField: 'product',
+  localField: '_id',
 });
 
-const Product = mongoose.model('Product', productSchema);
+const Product = mongoose.model(
+  'Product',
+  productSchema,
+);
 module.exports = Product;
