@@ -6,7 +6,9 @@ const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
 //  Handling uncaughtException
 process.on('uncaughtException', (err) => {
-  console.log('uncaught exception❗ Shutting Down .....');
+  console.log(
+    'uncaught exception❗ Shutting Down .....',
+  );
   console.log(err.name, err.message);
   console.log(err);
   // console.log(err.stack);
@@ -16,7 +18,7 @@ process.on('uncaughtException', (err) => {
 const app = require('./app');
 
 const DB = process.env.DATABASE.replace(
-  '<PASSWORD>',
+  '<password>',
   process.env.DATABASE_PASSWORD,
 );
 
@@ -45,7 +47,9 @@ const server = app.listen(port, () => {
 
 //  Handling unhandledRejection
 process.on('unhandledRejection', (err) => {
-  console.log('Unhandled Rejection❗ Shutting Down .....');
+  console.log(
+    'Unhandled Rejection❗ Shutting Down .....',
+  );
   console.log(err.name);
   console.log(err.message);
   server.close(() => {

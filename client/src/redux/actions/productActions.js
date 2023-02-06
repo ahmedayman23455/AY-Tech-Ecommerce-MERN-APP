@@ -3,9 +3,7 @@ import {
   setProducts,
   setLoading,
   setError,
-} from '../slices/productsSlice';
-/* ------------------------------------------------------ */
-
+} from '../slices/products';
 /* --------------------- getProducts -------------------- */
 export const getProducts = () =>
   async function (dispatch) {
@@ -14,6 +12,7 @@ export const getProducts = () =>
       const { data } = await axios('/api/v1/products');
       dispatch(setProducts(data.data));
     } catch (error) {
+      console.log(error);
       dispatch(
         setError(
           error.response && error.response.data.message

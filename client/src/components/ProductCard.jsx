@@ -13,15 +13,20 @@ import {
   Link,
   HStack,
   Text,
+  useToast,
 } from '@chakra-ui/react';
 import { FiShoppingCart } from 'react-icons/fi';
 import { Link as ReactLink } from 'react-router-dom';
 import { StarIcon } from '@chakra-ui/icons';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { cartSelector } from '../redux/slices/cart';
 
+import { addCartItem } from './../redux/actions/cartActions';
 /* ----------------------- Rating ----------------------- */
 const Rating = ({ ratingsAverage, ratingsQuantity }) => {
   const [iconSize, setIconSize] = useState('14px');
+
   return (
     <Flex>
       <HStack spacing="2px">
@@ -61,6 +66,30 @@ Rating.propTypes = {
 };
 /* --------------------- ProductCard -------------------- */
 const ProductCard = ({ product }) => {
+  const dispatch = useDispatch();
+  const { cart } = useSelector(cartSelector);
+  const toast = useToast();
+
+  // add item
+  const addItem = (id) => {
+    if (cart.some((item) => item.id === id)) {
+      toast({
+        description:
+          'This item is already in your cart , Go to your card to change the amount ',
+        status: 'error',
+        isClosable: true,
+      });
+    } else {
+      dispatch(addCartItem(id, 1));
+      toast({
+        description: 'Item has been added.',
+        status: 'success',
+        isClosable: true,
+      });
+    }
+  };
+
+  // return
   return (
     <Stack
       p={2}
@@ -169,6 +198,7 @@ const ProductCard = ({ product }) => {
             variant="ghost"
             display="flex"
             isDisabled={product.stock <= 0 ? true : false}
+            onClick={() => addItem(product._id)}
           >
             <Icon
               as={FiShoppingCart}

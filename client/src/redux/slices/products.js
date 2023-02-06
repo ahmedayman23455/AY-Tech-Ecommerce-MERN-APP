@@ -67,4 +67,4 @@ export const {
 
 export default productsSlice.reducer;
 
-export const productsSelector = (state) => state.productsReducer;
+export const productsSelector = (state) => state.products;

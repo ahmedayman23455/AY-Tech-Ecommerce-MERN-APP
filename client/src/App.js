@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import ProductsScreen from './screens/ProductsScreen';
+import CartScreen from './screens/CartScreen';
 
 /* ------------------------------------------------------ */
 function App() {
@@ -20,6 +21,7 @@ function App() {
               path="/products"
               element={<ProductsScreen />}
             ></Route>
+            <Route path="/cart" element={<CartScreen />}></Route>
           </Routes>
         </main>
       </Router>
