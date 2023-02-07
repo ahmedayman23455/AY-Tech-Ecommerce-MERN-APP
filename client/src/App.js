@@ -8,6 +8,7 @@ import {
 import Navbar from './components/Navbar';
 import ProductsScreen from './screens/ProductsScreen';
 import CartScreen from './screens/CartScreen';
+import ProductScreen from './screens/ProductScreen';
 
 /* ------------------------------------------------------ */
 function App() {
@@ -20,6 +21,10 @@ function App() {
             <Route
               path="/products"
               element={<ProductsScreen />}
+            ></Route>
+            <Route
+              path="/product/:id"
+              element={<ProductScreen />}
             ></Route>
             <Route path="/cart" element={<CartScreen />}></Route>
           </Routes>

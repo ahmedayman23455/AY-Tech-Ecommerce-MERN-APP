@@ -22,15 +22,11 @@ const ProductsScreen = () => {
   }, [dispatch]);
 
   return (
-    <>
-      {loading && (
-        <Stack
-          direction="row"
-          spacing={4}
-          mt="2rem"
-          justifyContent="center"
-        >
+    <Wrap spacing="30px" justify="center" minHeight="100vh">
+      {loading ? (
+        <Stack direction="row" spacing={4}>
           <Spinner
+            mt={20}
             thickness="2px"
             speed="0.65s"
             emptyColor="gray.200"
@@ -38,34 +34,22 @@ const ProductsScreen = () => {
             size="xl"
           />
         </Stack>
-      )}
-
-      {error && (
-        <Alert status="error" variant="subtle" w="full">
+      ) : error ? (
+        <Alert status="error">
           <AlertIcon />
-          <AlertTitle>Upps!</AlertTitle>
+          <AlertTitle>We are sorry!</AlertTitle>
           <AlertDescription>{error}</AlertDescription>
         </Alert>
+      ) : (
+        products.map((product) => (
+          <WrapItem key={product._id}>
+            <Center w="250px" h="550px">
+              <ProductCard product={product} />
+            </Center>
+          </WrapItem>
+        ))
       )}
-      
-      <Wrap
-        spacing={50}
-        justify="center"
-        minHeight="100vh"
-        mt={8}
-        mx={4}
-      >
-        {products &&
-          !error &&
-          products.map((product) => (
-            <WrapItem key={product._id}>
-              <Center w={250} h={550}>
-                <ProductCard product={product} />
-              </Center>
-            </WrapItem>
-          ))}
-      </Wrap>
-    </>
+    </Wrap>
   );
 };
 

@@ -133,7 +133,7 @@ const ProductCard = ({ product }) => {
             Sold out
           </Badge>
         )}
-        {product.isNew <= 0 && (
+        {product.isNew && (
           <Badge
             rounded="full"
             px={2}
@@ -149,7 +149,7 @@ const ProductCard = ({ product }) => {
       <Flex mt={1} justifyContent="space-between" alignItems="center">
         <Link
           as={ReactLink}
-          to={`product${product._id}`}
+          to={`/product/${product._id}`}
           pt={2}
           cursor="pointer"
         >
