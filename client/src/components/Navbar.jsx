@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Flex,
@@ -29,6 +29,7 @@ import PropTypes from 'prop-types';
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
+  const [isHovering, setIsHovering] = useState(false);
 
   const links = [
     {
@@ -78,13 +79,19 @@ const Navbar = () => {
         />
 
         <HStack>
-          <Link as={ReactLink} to="/">
+          <Link
+            as={ReactLink}
+            to="/"
+            style={{ textDecoration: 'none' }}
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+          >
             <Flex alignItems="center">
               <Icon
+                color={isHovering ? 'cyan.400' : 'orange.400'}
                 as={GiTechnoHeart}
                 h={6}
                 w={6}
-                color="orange.400"
               />
               <Text fontWeight="extrabold" fontSize="lg" ml={1}>
                 Tech Store
