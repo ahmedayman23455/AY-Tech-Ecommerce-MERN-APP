@@ -13,6 +13,13 @@ import {
   useColorModeValue,
   useColorMode,
   VStack,
+  useToast,
+  MenuButton,
+  MenuDivider,
+  Menu,
+  MenuItem,
+  MenuList,
+  Image,
 } from '@chakra-ui/react';
 
 import { Link as ReactLink, NavLink } from 'react-router-dom';
@@ -21,15 +28,31 @@ import {
   CloseIcon,
   MoonIcon,
   SunIcon,
+  ChevronDownIcon,
 } from '@chakra-ui/icons';
-import { GiTechnoHeart } from 'react-icons/gi';
 import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
+import { userSelector } from './../redux/slices/user';
+import { CgProfile } from 'react-icons/cg';
+import {
+  MdLocalShipping,
+  MdLogout,
+  MdOutlineAdminPanelSettings,
+} from 'react-icons/md';
+import { FiShoppingCart } from 'react-icons/fi';
+import { GiTechnoHeart } from 'react-icons/gi';
 
+import { logout } from '../redux/actions/userActions';
 /* ------------------------------------------------------ */
+
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
   const [isHovering, setIsHovering] = useState(false);
+  const { userInfo } = useSelector(userSelector);
+
+  const dispatch = useDispatch();
+  const toast = useToast();
 
   const links = [
     {
@@ -41,6 +64,15 @@ const Navbar = () => {
       path: '/cart',
     },
   ];
+
+  const logoutHandler = () => {
+    dispatch(logout());
+    toast({
+      description: `You have been logged out.`,
+      status: 'success',
+      isClosable: true,
+    });
+  };
 
   /* ------------------ NavLink Component ----------------- */
   const NavLink = (props) => {
@@ -124,30 +156,84 @@ const Navbar = () => {
           />
 
           <HStack>
-            <Button
-              as={ReactLink}
-              variant="link"
-              to="/login"
-              p={2}
-              fontSize="sm"
-              fontWeight={400}
-              color="inherit"
-            >
-              Sign In
-            </Button>
-            <Button
-              as={ReactLink}
-              to="/registration"
-              m={2}
-              fontSize="sm"
-              fontWeight={600}
-              bg="orange.500"
-              _hover={{ bg: 'orange.400' }}
-              color="white"
-              display={{ base: 'none', md: 'flex' }}
-            >
-              Sign Up
-            </Button>
+            {userInfo ? (
+              <HStack ml="2">
+                {userInfo.user.photo && (
+                  <Image
+                    src={`/images/${userInfo.user.photo}`}
+                    width="2rem"
+                    borderRadius="1000PX"
+                  />
+                )}
+
+                <Text textTransform="capitalize">
+                  {userInfo.user.name}
+                </Text>
+
+                <Menu>
+                  <MenuButton
+                    px="4"
+                    py="2"
+                    transition="all .3s"
+                    ml="3"
+                    as={Button}
+                  >
+                    {userInfo.name} <ChevronDownIcon />
+                  </MenuButton>
+
+                  <MenuList>
+                    <MenuItem as={ReactLink} to="/profile">
+                      <CgProfile />
+                      <Text ml="2">Profile</Text>
+                    </MenuItem>
+
+                    <MenuItem as={ReactLink} to="/your-orders">
+                      <MdLocalShipping />
+                      <Text ml="2">Your Orders</Text>
+                    </MenuItem>
+
+                    <MenuDivider />
+
+                    <MenuItem
+                      as={ReactLink}
+                      to="/your-orders"
+                      onClick={logoutHandler}
+                    >
+                      <MdLogout />
+                      <Text ml="2">Logout</Text>
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+              </HStack>
+            ) : (
+              <>
+                <Button
+                  as={ReactLink}
+                  variant="link"
+                  to="/login"
+                  p={2}
+                  fontSize="sm"
+                  fontWeight={400}
+                  color="inherit"
+                >
+                  Sign In
+                </Button>
+
+                <Button
+                  as={ReactLink}
+                  to="/registration"
+                  m={2}
+                  fontSize="sm"
+                  fontWeight={600}
+                  bg="orange.500"
+                  _hover={{ bg: 'orange.400' }}
+                  color="white"
+                  display={{ base: 'none', md: 'flex' }}
+                >
+                  Sign Up
+                </Button>
+              </>
+            )}
           </HStack>
         </Flex>
       </Flex>

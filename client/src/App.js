@@ -11,6 +11,8 @@ import CartScreen from './screens/CartScreen';
 import ProductScreen from './screens/ProductScreen';
 import Footer from './components/Footer';
 import LandingScreen from './screens/LandingScreen';
+import LoginScreen from './screens/LoginScreen';
+import RegistrationScreen from './screens/RegistrationScreen';
 
 /* ------------------------------------------------------ */
 function App() {
@@ -30,6 +32,11 @@ function App() {
               element={<ProductScreen />}
             ></Route>
             <Route path="/cart" element={<CartScreen />}></Route>
+            <Route path="/login" element={<LoginScreen />}></Route>
+            <Route
+              path="/registration"
+              element={<RegistrationScreen />}
+            ></Route>
           </Routes>
         </main>
         <Footer />

@@ -22,20 +22,16 @@ export const addCartItem = (id, qty) => async (dispatch) => {
     };
     dispatch(cartItemAdd(itemToAdd));
   } catch (error) {
-    dispatch(
-      setError(
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message
-          ? error.message
-          : 'An unexpected error has occured, Please try again later',
-      ),
-    );
+    setErrorFun(dispatch, error, setError);
   }
 };
 
 /* ------------------- removeCartItem ------------------- */
 export const removeCartItem = (id) => async (dispatch) => {
   dispatch(setLoading(true));
-  dispatch(cartItemRemoval(id));
+  try {
+    dispatch(cartItemRemoval(id));
+  } catch (error) {
+    setErrorFun(dispatch, error, setError);
+  }
 };
