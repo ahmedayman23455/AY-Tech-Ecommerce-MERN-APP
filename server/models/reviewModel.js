@@ -2,37 +2,40 @@ const mongoose = require('mongoose');
 const Product = require('./productModel');
 /* ------------------------------------------------------ */
 
-const reviewSchema = new mongoose.Schema({
-  review: {
-    type: String,
-    required: [true, "Review cann't be empty"],
+const reviewSchema = new mongoose.Schema(
+  {
+    review: {
+      type: String,
+      required: [true, "Review cann't be empty"],
+    },
+    rating: {
+      type: Number,
+      min: 1,
+      max: 5,
+    },
+    // createdAt: {
+    //   type: Date,
+    //   default: Date.now(),
+    // },
+    user: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+      required: [
+        true,
+        ' A review must belong to a user',
+      ],
+    },
+    product: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Product',
+      required: [
+        true,
+        'A review must belong to a product',
+      ],
+    },
   },
-  rating: {
-    type: Number,
-    min: 1,
-    max: 5,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now(),
-  },
-  user: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'User',
-    required: [
-      true,
-      ' A review must belong to a user',
-    ],
-  },
-  product: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'Product',
-    required: [
-      true,
-      'A review must belong to a product',
-    ],
-  },
-});
+  { timestamps: true },
+);
 
 /* ----- set indexes on some of fields in reviewModel ----- */
 reviewSchema.index(

@@ -19,10 +19,10 @@ import {
   Menu,
   MenuItem,
   MenuList,
-  Image,
+  Avatar,
 } from '@chakra-ui/react';
 
-import { Link as ReactLink, NavLink } from 'react-router-dom';
+import { Link as ReactLink, useNavigate } from 'react-router-dom';
 import {
   HamburgerIcon,
   CloseIcon,
@@ -43,14 +43,71 @@ import { FiShoppingCart } from 'react-icons/fi';
 import { GiTechnoHeart } from 'react-icons/gi';
 
 import { logout } from '../redux/actions/userActions';
-/* ------------------------------------------------------ */
+import { cartSelector } from './../redux/slices/cart';
+/* ------------------ shoppingCartIcon ------------------ */
+const ShoppingCartIcon = () => {
+  const { cart } = useSelector(cartSelector);
+  return (
+    <Flex alignItems="center">
+      <Icon
+        ml="-1.5"
+        as={FiShoppingCart}
+        h="4"
+        w="7"
+        alignSelf="center"
+      />
+      Cart
+      <Flex
+        justifyContent="cetner"
+        alignItems="center"
+        fontSize="xs"
+        w="5"
+        h="5"
+        ml="2"
+        bgColor="orange.500"
+        borderRadius="full"
+      >
+        <Text textAlign="center" w="full">
+          {cart.length}
+        </Text>
+      </Flex>
+    </Flex>
+  );
+};
 
+/* ------------------ NavLink Component ----------------- */
+const NavLink = (props) => {
+  const { path, children } = props;
+  return (
+    <Link
+      as={ReactLink}
+      to={path}
+      borderRadius="md"
+      px={2}
+      py={2}
+      rounded="md"
+      _hover={{
+        textDecoration: 'none',
+        bg: useColorModeValue('gray.200', 'gray.700'),
+      }}
+    >
+      {children}
+    </Link>
+  );
+};
+
+NavLink.propTypes = {
+  path: PropTypes.string,
+  children: PropTypes.any,
+};
+
+/* ----------------------- Navbar ----------------------- */
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
   const [isHovering, setIsHovering] = useState(false);
   const { userInfo } = useSelector(userSelector);
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const toast = useToast();
 
@@ -60,7 +117,7 @@ const Navbar = () => {
       path: '/products',
     },
     {
-      linkName: 'ShoppingCart',
+      linkName: <ShoppingCartIcon />,
       path: '/cart',
     },
   ];
@@ -72,33 +129,10 @@ const Navbar = () => {
       status: 'success',
       isClosable: true,
     });
+
+    // navigate('/');
   };
 
-  /* ------------------ NavLink Component ----------------- */
-  const NavLink = (props) => {
-    const { path, children } = props;
-    return (
-      <Link
-        as={ReactLink}
-        to={path}
-        borderRadius="md"
-        px={2}
-        py={2}
-        rounded="md"
-        _hover={{
-          textDecoration: 'none',
-          bg: useColorModeValue('gray.200', 'gray.700'),
-        }}
-      >
-        {children}
-      </Link>
-    );
-  };
-
-  NavLink.propTypes = {
-    path: PropTypes.string,
-    children: PropTypes.any,
-  };
   /* ----------------------- return ----------------------- */
   return (
     <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
@@ -158,27 +192,27 @@ const Navbar = () => {
           <HStack>
             {userInfo ? (
               <HStack ml="2">
-                {userInfo.user.photo && (
-                  <Image
-                    src={`/images/${userInfo.user.photo}`}
-                    width="2rem"
+                <HStack>
+                  <Avatar
+                    width="2.6rem"
+                    height="2.6rem"
+                    name={userInfo.name}
                     borderRadius="1000PX"
                   />
-                )}
 
-                <Text textTransform="capitalize">
-                  {userInfo.user.name}
-                </Text>
+                  <Text textTransform="capitalize">
+                    {userInfo.name}
+                  </Text>
+                </HStack>
 
                 <Menu>
                   <MenuButton
                     px="4"
                     py="2"
                     transition="all .3s"
-                    ml="3"
                     as={Button}
                   >
-                    {userInfo.name} <ChevronDownIcon />
+                    <ChevronDownIcon />
                   </MenuButton>
 
                   <MenuList>
@@ -194,11 +228,7 @@ const Navbar = () => {
 
                     <MenuDivider />
 
-                    <MenuItem
-                      as={ReactLink}
-                      to="/your-orders"
-                      onClick={logoutHandler}
-                    >
+                    <MenuItem onClick={logoutHandler}>
                       <MdLogout />
                       <Text ml="2">Logout</Text>
                     </MenuItem>
