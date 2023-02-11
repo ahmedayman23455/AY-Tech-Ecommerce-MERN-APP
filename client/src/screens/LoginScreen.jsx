@@ -47,7 +47,7 @@ const LoginScreen = () => {
     base: 'transparent',
     md: 'bg-surface',
   });
-  console.log(location) ; 
+  console.log(location);
   useEffect(() => {
     if (userInfo) {
       if (location.state?.from) {

@@ -43,8 +43,9 @@ const ProfileScreen = () => {
         status: 'success',
         isClosable: true,
       });
+      dispatch(resetUpdateSuccess());
     }
-  }, [updateSuccess, toast]);
+  }, [updateSuccess, toast, dispatch]);
 
   return userInfo ? (
     <Formik
@@ -56,7 +57,6 @@ const ProfileScreen = () => {
           .required('An email address is required.'),
       })}
       onSubmit={(values) => {
-        dispatch(resetUpdateSuccess());
         dispatch(updateProfile(values.name, values.email));
       }}
     >

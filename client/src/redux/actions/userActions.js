@@ -42,14 +42,12 @@ export const logout = () => async (dispatch) => {
   try {
     localStorage.removeItem('userInfo');
     localStorage.removeItem('userToken');
-    dispatch(resetUpdate());
+
     dispatch(userLogout());
   } catch (error) {
     setErrorFun(dispatch, error, setError);
   }
 };
-
-
 
 /* ---------------------- register ---------------------- */
 export const register =
