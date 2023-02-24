@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 /* ---------------------- TextField --------------------- */
 const TextField = ({ label, type, name, placeholder }) => {
   const [field, meta] = useField({ type, name, placeholder });
-
+  
   return (
     <FormControl isInvalid={meta.error && meta.touched} mb="6">
       <FormLabel noOfLines={1}>{label}</FormLabel>

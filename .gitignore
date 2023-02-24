@@ -10,6 +10,10 @@ node_modules/
 # testing
 /coverage
 
+
+#paypal  
+/client/src/client_id.js
+
 # production
 /build
 

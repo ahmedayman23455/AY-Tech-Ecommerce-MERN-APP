@@ -20,7 +20,8 @@ export const initialState = {
   loading: false,
   error: null,
   cart: JSON.parse(localStorage.getItem('cartItems')) ?? [],
-  expressShipping: false,
+  expressShipping:
+    JSON.parse(localStorage.getItem('expressShipping')) ?? false,
   subTotal: JSON.parse(localStorage.getItem('subtotal')) ?? 0,
 };
 
@@ -56,18 +57,37 @@ export const cartSlice = createSlice({
       updateLocalStorage(state.cart);
       state.subTotal = calculateSubtotal(state.cart);
       state.loading = false;
-      state.error = null;
     },
 
     setError: (state, { payload }) => {
       state.error = payload;
       state.loading = false;
     },
+
+    setExpressShipping: (state, { payload }) => {
+      state.expressShipping = payload
+      localStorage.setItem('expressShipping', payload);
+    },
+
+    clearCart: (state, { payload }) => {
+      localStorage.removeItem('cartItems');
+      localStorage.removeItem('subtotal');
+      state.cart = [];
+      state.loading = false;
+      state.error = null;
+      state.subTotal = 0;
+    },
   },
 });
 
-export const { setLoading, cartItemAdd, setError, cartItemRemoval } =
-  cartSlice.actions;
+export const {
+  setLoading,
+  cartItemAdd,
+  setError,
+  cartItemRemoval,
+  setExpressShipping,
+  clearCart,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;
 
