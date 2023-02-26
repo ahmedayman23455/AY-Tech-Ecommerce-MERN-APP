@@ -1,9 +1,13 @@
 import axios from 'axios';
 import {
-  setProducts,
-  setProduct,
   setLoading,
   setError,
+  setProducts,
+  setProduct,
+  productReviewed,
+  resetError,
+  setProductUpdateFlag,
+  setReviewRemovalFlag,
 } from '../slices/products';
 
 import { setErrorFun } from '../utils/setErrorFun';
@@ -29,4 +33,38 @@ export const getProduct = (id) => async (dispatch) => {
   } catch (error) {
     setErrorFun(dispatch, error, setError);
   }
+};
+
+/* ----------------- createProductReview ---------------- */
+export const createProductReview =
+  (productId, review, rating) => async (dispatch, getState) => {
+    const {
+      user: { userToken },
+    } = getState();
+
+    dispatch(setLoading(true));
+    console.log('test');
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+          'Content-Type': 'application/json',
+        },
+      };
+
+      await axios.post(
+        `/api/v1/products/${productId}/reviews`,
+        { review, rating },
+        config,
+      );
+
+      dispatch(productReviewed());
+    } catch (error) {
+      setErrorFun(dispatch, error, setError);
+    }
+  };
+
+/* ------------------ resetProductError ----------------- */
+export const resetProductError = () => async (dispatch) => {
+  dispatch(resetError());
 };

@@ -2,7 +2,7 @@ const User = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const factory = require('./factoryHandler');
-
+const Order = require('../models/orderModel');
 /* ------------------ filterObj  ------------------ */
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
@@ -19,6 +19,28 @@ exports.getMe = (req, res, next) => {
   next();
 };
 
+/* --------------------- getMyOrders -------------------- */
+exports.getMyOrders = catchAsync(
+  async (req, res, next) => {
+    const doc = await Order.find({
+      user: req.user._id,
+    }).select(
+      'shippingAddress orderItems shippingPrice totalPrice isDelivered createdAt',
+    );
+
+    if (doc.length <= 0) {
+      return next(
+        new AppError('No Orders Found !', 404),
+      );
+    }
+
+    return res.status(200).json({
+      status: 'success',
+      results: doc.length,
+      data: doc,
+    });
+  },
+);
 /* --------------------- getAllUsers -------------------- */
 exports.getAllUsers = factory.getAll(User);
 

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { productReviewed } from '../slices/products';
 import {
   setLoading,
   userLogin,
@@ -6,6 +7,7 @@ import {
   setError,
   updateUserProfile,
   resetUpdate,
+  setUserOrders,
 } from '../slices/user';
 import { setErrorFun } from './../utils/setErrorFun';
 
@@ -120,4 +122,31 @@ export const updateProfile =
 // Flag tells us every time the update is successfull
 export const resetUpdateSuccess = () => (dispatch) => {
   dispatch(resetUpdate());
+};
+
+/* -------------------- getUserOrders ------------------- */
+export const getUserOrders = () => async (dispatch, getState) => {
+  const {
+    user: { userToken },
+  } = getState();
+
+  dispatch(setLoading(true));
+
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const { data: response } = await axios.get(
+      'api/v1/users/getMyOrders',
+      config,
+    );
+    console.log(response);
+    dispatch(setUserOrders(response.data));
+  } catch (error) {
+    setErrorFun(dispatch, error, setError);
+  }
 };

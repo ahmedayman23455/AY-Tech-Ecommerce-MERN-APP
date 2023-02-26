@@ -18,29 +18,67 @@ import {
   SimpleGrid,
   Alert,
   useToast,
+  Avatar,
+  Tooltip,
+  Input,
+  Textarea,
 } from '@chakra-ui/react';
 import { MinusIcon, StarIcon, SmallAddIcon } from '@chakra-ui/icons';
 import { BiPackage, BiCheckShield, BiSupport } from 'react-icons/bi';
 import { useDispatch, useSelector } from 'react-redux';
-import { productsSelector } from '../redux/slices/products';
+import products, {
+  productsSelector,
+  setProduct,
+} from '../redux/slices/products';
 import { cartSelector } from '../redux/slices/cart';
+import { userSelector } from '../redux/slices/user';
 import { addCartItem } from '../redux/actions/cartActions';
 import { getProduct } from '../redux/actions/productActions';
 import TimeAgo from '../utils/TimeAgo';
+import {
+  createProductReview,
+  resetProductError,
+} from '../redux/actions/productActions';
 /* ------------------------------------------------------ */
 const ProductScreen = () => {
   const [amount, setAmount] = useState(1);
+  const [rating, setRating] = useState(1);
+  const [review, setReview] = useState('');
+  const [reviewBoxOpen, setReviewBoxOpen] = useState(false);
+
   const params = useParams();
   const dispatch = useDispatch();
   const toast = useToast();
-  const { loading, error, product } = useSelector(productsSelector);
+  const { loading, error, product, reviewSend } =
+    useSelector(productsSelector);
+  const { userInfo } = useSelector(userSelector);
   const { cart } = useSelector(cartSelector);
   const { id } = params;
 
   // useEffect
   useEffect(() => {
     dispatch(getProduct(id));
-  }, [dispatch, id, cart]);
+
+    if (reviewSend) {
+      toast({
+        description: 'Product review saved.',
+        status: 'success',
+        isClosable: true,
+      });
+
+      /* once we done this , The user just want to go to another product and create  
+      another review we want to reset that flag   
+      */
+      dispatch(resetProductError());
+      setReviewBoxOpen(false);
+    }
+  }, [dispatch, id, cart, reviewSend, toast]);
+
+  // hasUserReviewed
+  const hasUserReviewed = () =>
+    product.reviews.some(
+      (review) => review.user._id === userInfo._id,
+    );
 
   // changeAmount
   const changeAmount = (input) => {
@@ -250,6 +288,115 @@ const ProductScreen = () => {
                 />
               </Flex>
             </Stack>
+
+            {userInfo && (
+              <>
+                <Tooltip
+                  fontSize="md"
+                  label={
+                    hasUserReviewed()
+                      ? 'you have already reviewd this product.'
+                      : ''
+                  }
+                >
+                  <Button
+                    isDisabled={hasUserReviewed()}
+                    my="20px"
+                    w="140px"
+                    colorScheme="orange"
+                    onClick={() => {
+                      setReviewBoxOpen((prevState) => !prevState);
+                    }}
+                  >
+                    Write a review
+                  </Button>
+                </Tooltip>
+
+                {reviewBoxOpen && (
+                  <Stack mb="20px">
+                    <Wrap>
+                      <HStack spacing="2px">
+                        <Button
+                          variant="outline"
+                          onClick={() => {
+                            setRating(1);
+                          }}
+                        >
+                          <StarIcon color="orange.500" />
+                        </Button>
+
+                        <Button
+                          variant="outline"
+                          onClick={() => {
+                            setRating(2);
+                          }}
+                        >
+                          <StarIcon
+                            color={
+                              rating >= 2 ? 'orange.500' : 'gray.200'
+                            }
+                          />
+                        </Button>
+                        <Button
+                          variant="outline"
+                          onClick={() => {
+                            setRating(3);
+                          }}
+                        >
+                          <StarIcon
+                            color={
+                              rating >= 3 ? 'orange.500' : 'gray.200'
+                            }
+                          />
+                        </Button>
+                        <Button
+                          variant="outline"
+                          onClick={() => {
+                            setRating(4);
+                          }}
+                        >
+                          <StarIcon
+                            color={
+                              rating >= 4 ? 'orange.500' : 'gray.200'
+                            }
+                          />
+                        </Button>
+                        <Button
+                          variant="outline"
+                          onClick={() => {
+                            setRating(5);
+                          }}
+                        >
+                          <StarIcon
+                            color={
+                              rating >= 5 ? 'orange.500' : 'gray.200'
+                            }
+                          />
+                        </Button>
+                      </HStack>
+                    </Wrap>
+
+                    <Textarea
+                      onChange={(e) => setReview(e.target.value)}
+                      placeholder="Enter Your Review"
+                    ></Textarea>
+
+                    <Button
+                      width="140px"
+                      colorScheme="orange"
+                      onClick={() => {
+                        dispatch(
+                          createProductReview(id, review, rating),
+                        );
+                      }}
+                    >
+                      Publish Review
+                    </Button>
+                  </Stack>
+                )}
+              </>
+            )}
+
             <Stack>
               <Text fontSize="xl" fontWeight="bold" mb="10px">
                 Reviews
@@ -266,11 +413,13 @@ const ProductScreen = () => {
                     return (
                       <Stack key={review._id} spacing={2}>
                         <HStack>
-                          <Image
-                            src={`/images/${review.user.photo}`}
-                            width="3rem"
+                          <Avatar
+                            width="2.2rem"
+                            height="2.2rem"
+                            name={review.user.name}
                             borderRadius="1000PX"
                           />
+
                           <Text> {review.user.name} </Text>
                         </HStack>
 

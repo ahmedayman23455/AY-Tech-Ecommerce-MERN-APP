@@ -67,7 +67,7 @@ const ShoppingCartIcon = () => {
         bgColor="orange.500"
         borderRadius="full"
       >
-        <Text textAlign="center" w="full">
+        <Text textAlign="center" w="full" color="white">
           {cart.length}
         </Text>
       </Flex>

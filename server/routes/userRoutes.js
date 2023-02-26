@@ -28,6 +28,13 @@ router.get(
   userController.getMe,
   userController.getUser,
 );
+
+router.get(
+  '/getMyOrders',
+  authController.protect,
+  userController.getMyOrders,
+);
+
 router.patch(
   '/updateMe',
   authController.protect,

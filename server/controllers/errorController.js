@@ -82,6 +82,9 @@ module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
 
+  console.log(err);
+  console.log(err.code);
+
   if (process.env.NODE_ENV === 'development') {
     sendErrorDev(err, res);
   } else if (
@@ -96,6 +99,7 @@ module.exports = (err, req, res, next) => {
     }
 
     if (err.code === 11000) {
+      console.log('test 😡😡');
       error = handleDuplicateFieldsDB(error);
     }
 

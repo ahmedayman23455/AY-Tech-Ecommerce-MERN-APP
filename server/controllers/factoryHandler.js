@@ -53,7 +53,7 @@ exports.updateOne = (Model) =>
 /* ---------------------- createOne --------------------- */
 exports.createOne = (Model) =>
   catchAsync(async (req, res) => {
-    console.log('test🙂');
+    console.log('we create a review');
     const doc = await Model.create(req.body);
     res.status(201).json({
       status: 'success',

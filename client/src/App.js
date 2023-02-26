@@ -16,6 +16,7 @@ import RegistrationScreen from './screens/RegistrationScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import CheckoutScreen from './screens/CheckoutScreen';
 import OrderSuccessScreen from './screens/OrderSuccessScreen';
+import YourOrdersScreen from './screens/YourOrdersScreen';
 
 /* ------------------------------------------------------ */
 function App() {
@@ -26,16 +27,21 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<LandingScreen />}></Route>
+
             <Route
               path="/products"
               element={<ProductsScreen />}
             ></Route>
+
             <Route
               path="/product/:id"
               element={<ProductScreen />}
             ></Route>
+
             <Route path="/cart" element={<CartScreen />}></Route>
+
             <Route path="/login" element={<LoginScreen />}></Route>
+
             <Route
               path="/registration"
               element={<RegistrationScreen />}
@@ -46,10 +52,16 @@ function App() {
             ></Route>
 
             <Route path="/checkout" element={<CheckoutScreen />} />
+
             <Route
               path="/order-success"
               element={<OrderSuccessScreen />}
             />
+
+            <Route
+              path="/your-orders"
+              element={<YourOrdersScreen />}
+            ></Route>
           </Routes>
         </main>
         <Footer />
