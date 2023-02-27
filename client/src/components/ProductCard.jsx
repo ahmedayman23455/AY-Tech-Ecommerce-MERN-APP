@@ -28,36 +28,49 @@ const Rating = ({ ratingsAverage, ratingsQuantity }) => {
   const [iconSize, setIconSize] = useState('14px');
 
   return (
-    <Flex>
-      <HStack spacing="2px">
-        <StarIcon size={iconSize} w="14px" color="orange.500" />
-        <StarIcon
-          size={iconSize}
-          w="14px"
-          color={ratingsAverage >= 2 ? 'orange.500' : 'grey.200'}
-        />
-        <StarIcon
-          size={iconSize}
-          w="14px"
-          color={ratingsAverage >= 3 ? 'orange.500' : 'grey.200'}
-        />
-        <StarIcon
-          size={iconSize}
-          w="14px"
-          color={ratingsAverage >= 4 ? 'orange.500' : 'grey.200'}
-        />
-        <StarIcon
-          size={iconSize}
-          w="14px"
-          color={ratingsAverage >= 5 ? 'orange.500' : 'grey.200'}
-        />
-      </HStack>
+    <>
+      <Flex>
+        <HStack spacing="2px">
+          <StarIcon size={iconSize} w="14px" color="orange.500" />
+          <StarIcon
+            size={iconSize}
+            w="14px"
+            color={ratingsAverage >= 2 ? 'orange.500' : 'grey.200'}
+          />
+          <StarIcon
+            size={iconSize}
+            w="14px"
+            color={ratingsAverage >= 3 ? 'orange.500' : 'grey.200'}
+          />
+          <StarIcon
+            size={iconSize}
+            w="14px"
+            color={ratingsAverage >= 4 ? 'orange.500' : 'grey.200'}
+          />
+          <StarIcon
+            size={iconSize}
+            w="14px"
+            color={ratingsAverage >= 5 ? 'orange.500' : 'grey.200'}
+          />
+        </HStack>
+
+        <Text
+          fontSize="md"
+          fontWeight="bold"
+          ml="4px"
+          color="orange.500"
+        >
+          {ratingsAverage}
+        </Text>
+      </Flex>
       <Text fontSize="md" fontWeight="bold" ml="4px">
+        (
         {`${ratingsQuantity} ${
           ratingsQuantity === 1 ? 'Review' : 'Reviews'
         }`}
+        )
       </Text>
-    </Flex>
+    </>
   );
 };
 Rating.propTypes = {

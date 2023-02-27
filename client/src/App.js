@@ -17,6 +17,7 @@ import ProfileScreen from './screens/ProfileScreen';
 import CheckoutScreen from './screens/CheckoutScreen';
 import OrderSuccessScreen from './screens/OrderSuccessScreen';
 import YourOrdersScreen from './screens/YourOrdersScreen';
+import AdminConsoleScreen from './screens/AdminConsoleScreen';
 
 /* ------------------------------------------------------ */
 function App() {
@@ -62,6 +63,11 @@ function App() {
               path="/your-orders"
               element={<YourOrdersScreen />}
             ></Route>
+
+            <Route
+              path="/admin-console"
+              element={<AdminConsoleScreen />}
+            />
           </Routes>
         </main>
         <Footer />

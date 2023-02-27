@@ -51,6 +51,7 @@ const ProductScreen = () => {
   const toast = useToast();
   const { loading, error, product, reviewSend } =
     useSelector(productsSelector);
+
   const { userInfo } = useSelector(userSelector);
   const { cart } = useSelector(cartSelector);
   const { id } = params;
@@ -199,13 +200,27 @@ const ProductScreen = () => {
                           }
                         />
                       </HStack>
+                      <HStack spacing='1rem'>
+                        <Text
+                          fontSize="md"
+                          fontWeight="bold"
+                          ml="4px"
+                          color="orange.500"
+                        >
+                          {product.ratingsAverage}
+                        </Text>
 
-                      <Text fontSize="md" fontWeight="bold" ml="4px">
-                        {product.ratingsQuantity}
-                        {product.ratingsQuantity > 1
-                          ? ' Reviews'
-                          : ' Review'}
-                      </Text>
+                        <Text
+                          fontSize="md"
+                          fontWeight="bold"
+                          ml="4px"
+                        >(
+                          {product.ratingsQuantity}
+                          {product.ratingsQuantity > 1
+                            ? ' Reviews'
+                            : ' Review'})
+                        </Text>
+                      </HStack>
                     </Flex>
                   </Box>
 

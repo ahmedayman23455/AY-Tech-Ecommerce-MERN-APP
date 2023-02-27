@@ -102,7 +102,7 @@ export const updateProfile =
       };
 
       const { data: response } = await axios.patch(
-        'api/v1/users/updateMe',
+        '/api/v1/users/updateMe',
         { name, email },
         config,
       );
@@ -141,7 +141,7 @@ export const getUserOrders = () => async (dispatch, getState) => {
     };
 
     const { data: response } = await axios.get(
-      'api/v1/users/getMyOrders',
+      '/api/v1/users/getMyOrders',
       config,
     );
     console.log(response);
