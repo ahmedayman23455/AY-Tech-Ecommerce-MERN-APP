@@ -29,8 +29,8 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState: initialState,
   reducers: {
-    setLoading: (state) => {
-      state.loading = true;
+    setLoading: (state, { payload }) => {
+      state.loading = payload;
     },
 
     cartItemAdd: (state, { payload }) => {
@@ -65,7 +65,7 @@ export const cartSlice = createSlice({
     },
 
     setExpressShipping: (state, { payload }) => {
-      state.expressShipping = payload
+      state.expressShipping = payload;
       localStorage.setItem('expressShipping', payload);
     },
 

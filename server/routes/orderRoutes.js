@@ -7,9 +7,16 @@ const router = express.Router();
 router.use(authController.protect);
 router
   .route('/')
-  .get(orderController.getAllOrders)
-  .post(orderController.createOrder);
+  .get(
+    authController.restrictTo('admin'),
+    orderController.getAllOrders,
+  )
+  .post(
+    authController.restrictTo('user'),
+    orderController.createOrder,
+  );
 
+router.use(authController.restrictTo('admin'));
 router
   .route('/:id')
   .get(orderController.getOrder)

@@ -66,7 +66,7 @@ const UsersTab = () => {
   return (
     <Box>
       {loading ? (
-        <Stack direction="row" spacing={4} justifyContent='center'>
+        <Stack direction="row" spacing={4} justifyContent="center">
           <Spinner
             mt={20}
             thickness="2px"
@@ -84,7 +84,7 @@ const UsersTab = () => {
         </Alert>
       ) : (
         userList && (
-          <Box >
+          <Box>
             <TableContainer overflow="auto">
               <Table>
                 <Thead>
@@ -139,7 +139,8 @@ const UsersTab = () => {
               isOpen={isOpen}
               onClose={onClose}
               cancelRef={cancelRef}
-              userToDelete={userToDelete}
+              itemToDelete={userToDelete}
+              itemType="user"
               deleteAction={deleteUser}
             />
           </Box>

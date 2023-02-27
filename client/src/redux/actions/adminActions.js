@@ -5,6 +5,9 @@ import {
   getUsers,
   userDelete,
   resetError,
+  getOrders,
+  orderDelete,
+  setDeliveredFlag,
 } from '../slices/admin.js';
 import { setErrorFun } from './../utils/setErrorFun';
 
@@ -51,10 +54,7 @@ export const deleteUser = (userId) => async (dispatch, getState) => {
       },
     };
 
-    const { data: response } = await axios.delete(
-      `/api/v1/users/${userId}`,
-      config,
-    );
+    await axios.delete(`/api/v1/users/${userId}`, config);
 
     dispatch(userDelete());
   } catch (error) {
@@ -66,3 +66,85 @@ export const deleteUser = (userId) => async (dispatch, getState) => {
 export const resetErrorAndRemovel = () => async (dispatch) => {
   dispatch(resetError());
 };
+
+/* -------------------- getAllOrders -------------------- */
+export const getAllOrders = () => async (dispatch, getState) => {
+  const {
+    user: { userToken },
+  } = getState();
+
+  dispatch(setLoading(true));
+
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const { data: response } = await axios.get(
+      '/api/v1/orders',
+      config,
+    );
+
+    dispatch(getOrders(response.data));
+  } catch (error) {
+    setErrorFun(dispatch, error, setError);
+  }
+};
+
+/* --------------------- deletOrder --------------------- */
+export const deleteOrder =
+  (orderId) => async (dispatch, getState) => {
+    const {
+      user: { userToken },
+    } = getState();
+
+    dispatch(setLoading(true));
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+          'Content-Type': 'application/json',
+        },
+      };
+      await axios.delete(`/api/v1/orders/${orderId}`, config);
+      dispatch(orderDelete());
+    } catch (error) {
+      setErrorFun(dispatch, error, setError);
+    }
+  };
+
+/* -------------------- setDelivered -------------------- */
+
+export const setDelivered =
+  (orderId, isDelivered) => async (dispatch, getState) => {
+    const {
+      user: { userToken },
+    } = getState();
+
+    dispatch(setLoading(true));
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+          'Content-Type': 'application/json',
+        },
+      };
+
+      await axios.patch(
+        `/api/v1/orders/${orderId}`,
+        {
+          isDelivered: isDelivered,
+        },
+        config,
+      );
+
+      dispatch(setDeliveredFlag());
+    } catch (error) {
+      setErrorFun(dispatch, error, setError);
+    }
+  };

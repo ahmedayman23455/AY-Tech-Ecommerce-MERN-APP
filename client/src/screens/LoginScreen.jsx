@@ -121,7 +121,7 @@ const LoginScreen = () => {
                 as="form"
                 onSubmit={formik.handleSubmit}
               >
-                {error && (
+                {/* {error && (
                   <Alert
                     status="error"
                     flexDirection="column"
@@ -133,7 +133,7 @@ const LoginScreen = () => {
                     <AlertTitle>We are sorry!</AlertTitle>
                     <AlertDescription>{error}</AlertDescription>
                   </Alert>
-                )}
+                )} */}
                 <Stack spacing="5">
                   <FormControl>
                     <TextField

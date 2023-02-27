@@ -13,8 +13,8 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setLoading: (state) => {
-      state.loading = true;
+    setLoading: (state, { payload }) => {
+      state.loading = payload;
     },
     userLogin: (state, { payload }) => {
       state.userInfo = payload.data.user;

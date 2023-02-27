@@ -14,8 +14,8 @@ export const productsSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {
-    setLoading: (state) => {
-      state.loading = true;
+    setLoading: (state, { payload }) => {
+      state.loading = payload;
     },
     setProducts: (state, { payload }) => {
       state.loading = false;

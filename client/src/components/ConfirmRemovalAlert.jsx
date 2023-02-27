@@ -13,14 +13,20 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 /* ------------------------------------------------------ */
 const ConfirmRemovalAlert = (props) => {
-  const { isOpen, onClose, cancelRef, userToDelete, deleteAction } =
-    props;
+  const {
+    isOpen,
+    onClose,
+    cancelRef,
+    itemToDelete,
+    itemType,
+    deleteAction,
+  } = props;
 
   const dispatch = useDispatch();
 
   //   onDeleteItem
   const onDeleteItem = () => {
-    dispatch(deleteAction(userToDelete._id));
+    dispatch(deleteAction(itemToDelete._id));
     onClose();
   };
 
@@ -33,7 +39,11 @@ const ConfirmRemovalAlert = (props) => {
       <AlertDialogOverlay>
         <AlertDialogContent>
           <AlertDialogHeader fontSize="lg" fontWeight="bold">
-            Delete {userToDelete.name}
+            Delete
+            {itemType === 'user'
+              ? itemToDelete.name
+              : itemType === 'order' &&
+                ` ${itemToDelete.username?.split(' ')[0]} Order`}
           </AlertDialogHeader>
 
           <AlertDialogBody>
@@ -45,7 +55,11 @@ const ConfirmRemovalAlert = (props) => {
               Cancel
             </Button>
             <Button colorScheme="red" onClick={onDeleteItem} ml={3}>
-              Delete {userToDelete.name}
+              Delete
+              {itemType === 'user'
+                ? itemToDelete.name
+                : itemType === 'order' &&
+                  ` ${itemToDelete.username?.split(' ')[0]} Order`}
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -58,8 +72,9 @@ ConfirmRemovalAlert.propTypes = {
   isOpen: PropTypes.bool,
   onClose: PropTypes.func,
   cancelRef: PropTypes.object,
-  userToDelete: PropTypes.object,
+  itemToDelete: PropTypes.object,
   deleteAction: PropTypes.func,
+  itemType: PropTypes.string,
 };
 
 export default ConfirmRemovalAlert;

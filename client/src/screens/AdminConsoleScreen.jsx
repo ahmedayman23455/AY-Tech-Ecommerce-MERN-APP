@@ -13,6 +13,7 @@ import {
 import { Navigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import UsersTab from '../components/UsersTab';
+import OrdersTab from '../components/OrdersTab';
 /* ------------------------------------------------------ */
 const AdminConsoleScreen = () => {
   const { userInfo } = useSelector((state) => state.user);
@@ -23,6 +24,8 @@ const AdminConsoleScreen = () => {
       <Stack
         direction={{ base: 'column', lg: 'row' }}
         align={{ lg: 'flex-start' }}
+        width="full"
+        overflow="auto"
       >
         <Stack
           pr={{ base: 0, md: 14 }}
@@ -37,9 +40,9 @@ const AdminConsoleScreen = () => {
           <Tabs size="md" variant="enclosed">
             <TabList>
               <Tab>Users</Tab>
+              <Tab>Orders</Tab>
               <Tab>Products</Tab>
               <Tab>Reviews</Tab>
-              <Tab>Orders</Tab>
             </TabList>
 
             <TabPanels>
@@ -47,14 +50,15 @@ const AdminConsoleScreen = () => {
                 <UsersTab />
               </TabPanel>
               <TabPanel>
+                <OrdersTab />
+              </TabPanel>
+              <TabPanel>
                 <p>Products</p>
               </TabPanel>
               <TabPanel>
                 <p>Reviews</p>
               </TabPanel>
-              <TabPanel>
-                <p>Orders</p>
-              </TabPanel>
+         
             </TabPanels>
           </Tabs>
         </Stack>
