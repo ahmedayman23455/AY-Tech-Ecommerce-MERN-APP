@@ -95,7 +95,7 @@ reviewSchema.pre(/^find/, function (next) {
 reviewSchema.pre(
   /^findOneAnd/,
   async function (next) {
-    this.r = await this.findOne();
+    this.r = await this.findOne().clone();
 
     next();
   },

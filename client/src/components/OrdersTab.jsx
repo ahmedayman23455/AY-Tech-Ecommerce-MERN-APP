@@ -76,7 +76,7 @@ const OrdersTab = () => {
   //onSetToDelivered
   const onSetToDelivered = (order) => {
     dispatch(resetErrorAndRemovel());
-    dispatch(setDelivered(order._id, true));
+    dispatch(setDelivered(order?._id, true));
   };
 
   // return

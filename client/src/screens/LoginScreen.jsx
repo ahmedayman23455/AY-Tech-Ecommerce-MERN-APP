@@ -30,6 +30,7 @@ import PasswordTextField from '../components/PasswordTextField';
 import TextField from '../components/TextField';
 import { login } from '../redux/actions/userActions';
 import { userSelector } from '../redux/slices/user';
+import { resetErrorUser } from '../redux/actions/userActions';
 
 /* ------------------------------------------------------ */
 //TODO: redefine password length

@@ -14,6 +14,7 @@ import {
   resetError as resetErrorOfProducts,
   setProducts,
   setProductUpdateFlag,
+  setReviewRemovalFlag,
 } from '../slices/products.js';
 /* --------------------- getAllUsers -------------------- */
 export const getAllUsers = () => async (dispatch, getState) => {
@@ -176,7 +177,7 @@ export const updateProduct =
         config,
       );
 
-      console.log(response);
+
 
       dispatch(setProducts(response.data));
       dispatch(setProductUpdateFlag());
@@ -253,3 +254,64 @@ export const createProduct =
 export const resetErrorAndRemovel = () => async (dispatch) => {
   dispatch(resetError());
 };
+
+/* -------------------- deleteReview -------------------- */
+export const deleteReview =
+  (reviewId) => async (dispatch, getState) => {
+    const {
+      user: { userToken },
+    } = getState();
+
+    dispatch(setLoading(true));
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+          'Content-Type': 'application/json',
+        },
+      };
+
+
+      await axios.delete(`/api/v1/reviews/${reviewId}`, config);
+      //
+      //       const { data: response } = await axios.get(
+      //         '/api/v1/reviews',
+      //         config,
+      //       );
+
+      // dispatch(setProducts(response.data));
+      // dispatch(setProductUpdateFlag());
+      dispatch(setReviewRemovalFlag());
+      dispatch(resetError());
+    } catch (error) {
+      setErrorFun(dispatch, error, setError);
+    }
+  };
+
+/* ----------------- getReviewsOfProduct ---------------- */
+export const getReviewsOfProduct =
+  (productId) => async (dispatch, getState) => {
+    const {
+      user: { userToken },
+    } = getState();
+
+    // dispatch(setLoading(true));
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+          'Content-Type': 'application/json',
+        },
+      };
+
+      const { data: response } = await axios.get(
+        `/api/v1/products/${productId}/reviews`,
+        config,
+      );
+      return response;
+    } catch (error) {
+      setErrorFun(dispatch, error, setError);
+    }
+  };

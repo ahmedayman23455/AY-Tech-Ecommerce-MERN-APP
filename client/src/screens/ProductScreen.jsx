@@ -56,7 +56,7 @@ const ProductScreen = () => {
   const { cart } = useSelector(cartSelector);
   const { id } = params;
 
-  console.log(product?.reviews); 
+
   // useEffect
   useEffect(() => {
     dispatch(getProduct(id));

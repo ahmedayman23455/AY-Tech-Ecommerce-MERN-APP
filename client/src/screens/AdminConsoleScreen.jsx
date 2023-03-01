@@ -15,6 +15,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import UsersTab from '../components/UsersTab';
 import OrdersTab from '../components/OrdersTab';
 import ProductsTab from '../components/ProductsTab';
+import ReviewsTab from '../components/ReviewsTab';
 /* ------------------------------------------------------ */
 const AdminConsoleScreen = () => {
   const { userInfo } = useSelector((state) => state.user);
@@ -57,7 +58,7 @@ const AdminConsoleScreen = () => {
                 <ProductsTab />
               </TabPanel>
               <TabPanel>
-                <p>Reviews</p>
+                <ReviewsTab />
               </TabPanel>
             </TabPanels>
           </Tabs>

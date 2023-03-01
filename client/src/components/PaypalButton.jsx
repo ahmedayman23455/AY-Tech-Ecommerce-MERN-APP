@@ -8,10 +8,7 @@ const PaypalButton = () => {
   const [orderId, setOrderId] = useState();
   const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  console.log(
-    '🚀 ~ file: PaypalButton.jsx:11 ~ PaypalButton ~ errorMessage',
-    errorMessage,
-  );
+
 
   //   createOrder
   const createOrder = (data, actions) => {

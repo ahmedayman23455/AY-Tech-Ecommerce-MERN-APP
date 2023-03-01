@@ -43,7 +43,7 @@ export const createProductReview =
     } = getState();
 
     dispatch(setLoading(true));
-    console.log('test');
+  
     try {
       const config = {
         headers: {

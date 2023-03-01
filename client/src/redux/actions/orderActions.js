@@ -38,7 +38,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
       config,
     );
   } catch (error) {
-    console.log(error);
+
     dispatch(
       setError(
         error.response && error.response.data.message

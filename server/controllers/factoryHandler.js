@@ -53,7 +53,6 @@ exports.updateOne = (Model) =>
 /* ---------------------- createOne --------------------- */
 exports.createOne = (Model) =>
   catchAsync(async (req, res) => {
-    console.log('we create a review');
     const doc = await Model.create(req.body);
     res.status(201).json({
       status: 'success',
@@ -89,8 +88,9 @@ exports.getAll = (Model) =>
   catchAsync(async (req, res) => {
     //  To Allow For Nested Get Reviews On product  (Hack)
     let filter = {};
-    if (req.params.proudctId) {
-      filter = { product: req.params.proudctId };
+
+    if (req.params.productId) {
+      filter = { product: req.params.productId };
     }
     /* ------------------------------------------------------ */
 

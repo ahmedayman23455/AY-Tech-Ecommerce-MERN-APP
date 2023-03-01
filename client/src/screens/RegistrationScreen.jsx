@@ -23,7 +23,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link as ReactLink } from 'react-router-dom';
-import { register } from '../redux/actions/userActions';
+import { register } from '../redux/actions/userActions';  
 
 const RegistrationScreen = () => {
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ const RegistrationScreen = () => {
     md: 'bg-surface',
   });
 
-  useEffect(() => {
+  useEffect(() => {  
     if (userInfo) {
       navigate(redirect);
       toast({
@@ -103,7 +103,7 @@ const RegistrationScreen = () => {
                   <Text color="muted">Already a user? </Text>
                   <Button
                     as={ReactLink}
-                    to="/registration"
+                    to="/login"
                     variant="link"
                     colorScheme="blue"
                   >
