@@ -30,7 +30,7 @@ const ProductsScreen = () => {
             thickness="2px"
             speed="0.65s"
             emptyColor="gray.200"
-            color="orange.500"
+            color="blue.500"
             size="xl"
           />
         </Stack>

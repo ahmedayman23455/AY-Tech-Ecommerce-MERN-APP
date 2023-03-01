@@ -35,7 +35,7 @@ const CartScreen = () => {
             thickness="2px"
             speed="0.65s"
             emptyColor="gray.200"
-            color="orange.500"
+            color="blue.500"
             size="xl"
           />
         </Stack>
@@ -86,7 +86,7 @@ const CartScreen = () => {
                 <Link
                   as={ReactLink}
                   to="/products"
-                  color={mode('orange.500', 'orange.200')}
+                  color={mode('blue.500', 'blue.200')}
                 >
                   Continue Shopping
                 </Link>

@@ -31,7 +31,7 @@ const Footer = () => (
               as={GiTechnoHeart}
               h={10}
               w={10}
-              color="orange.400"
+              color="blue.400"
             />
             <Text fontSize="2xl" fontWeight="extrabold">
               Tech Lines

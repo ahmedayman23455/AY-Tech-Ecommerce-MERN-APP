@@ -31,26 +31,26 @@ const Rating = ({ ratingsAverage, ratingsQuantity }) => {
     <>
       <Flex>
         <HStack spacing="2px">
-          <StarIcon size={iconSize} w="14px" color="orange.500" />
+          <StarIcon size={iconSize} w="14px" color="blue.500" />
           <StarIcon
             size={iconSize}
             w="14px"
-            color={ratingsAverage >= 2 ? 'orange.500' : 'grey.200'}
+            color={ratingsAverage >= 2 ? 'blue.500' : 'grey.200'}
           />
           <StarIcon
             size={iconSize}
             w="14px"
-            color={ratingsAverage >= 3 ? 'orange.500' : 'grey.200'}
+            color={ratingsAverage >= 3 ? 'blue.500' : 'grey.200'}
           />
           <StarIcon
             size={iconSize}
             w="14px"
-            color={ratingsAverage >= 4 ? 'orange.500' : 'grey.200'}
+            color={ratingsAverage >= 4 ? 'blue.500' : 'grey.200'}
           />
           <StarIcon
             size={iconSize}
             w="14px"
-            color={ratingsAverage >= 5 ? 'orange.500' : 'grey.200'}
+            color={ratingsAverage >= 5 ? 'blue.500' : 'grey.200'}
           />
         </HStack>
 
@@ -58,7 +58,7 @@ const Rating = ({ ratingsAverage, ratingsQuantity }) => {
           fontSize="md"
           fontWeight="bold"
           ml="4px"
-          color="orange.500"
+          color="blue.500"
         >
           {ratingsAverage}
         </Text>

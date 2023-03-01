@@ -61,7 +61,14 @@ const LoginScreen = () => {
         isClosable: true,
       });
     }
-  }, [userInfo, redirect, error, navigate, location.state, toast]);
+  }, [
+    userInfo,
+    redirect,
+    error,
+    navigate,
+    location.state?.from,
+    toast,
+  ]);
 
   return (
     <Formik
@@ -103,7 +110,7 @@ const LoginScreen = () => {
                     as={ReactLink}
                     to="/registration"
                     variant="link"
-                    colorScheme="orange"
+                    colorScheme="blue"
                   >
                     Sign up
                   </Button>
@@ -121,7 +128,7 @@ const LoginScreen = () => {
                 as="form"
                 onSubmit={formik.handleSubmit}
               >
-                {/* {error && (
+                {error && (
                   <Alert
                     status="error"
                     flexDirection="column"
@@ -133,7 +140,7 @@ const LoginScreen = () => {
                     <AlertTitle>We are sorry!</AlertTitle>
                     <AlertDescription>{error}</AlertDescription>
                   </Alert>
-                )} */}
+                )}
                 <Stack spacing="5">
                   <FormControl>
                     <TextField
@@ -152,7 +159,7 @@ const LoginScreen = () => {
                 </Stack>
                 <Stack spacing="6">
                   <Button
-                    colorScheme="orange"
+                    colorScheme="blue"
                     size="lg"
                     fontSize="md"
                     isLoading={loading}

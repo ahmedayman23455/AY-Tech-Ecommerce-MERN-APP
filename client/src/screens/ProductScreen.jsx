@@ -56,6 +56,7 @@ const ProductScreen = () => {
   const { cart } = useSelector(cartSelector);
   const { id } = params;
 
+  console.log(product?.reviews); 
   // useEffect
   useEffect(() => {
     dispatch(getProduct(id));
@@ -78,7 +79,7 @@ const ProductScreen = () => {
   // hasUserReviewed
   const hasUserReviewed = () =>
     product.reviews.some(
-      (review) => review.user._id === userInfo._id,
+      (review) => review?.user?._id === userInfo?._id,
     );
 
   // changeAmount
@@ -111,7 +112,7 @@ const ProductScreen = () => {
             thickness="2px"
             speed="0.65s"
             emptyColor="gray.200"
-            color="orange.500"
+            color="blue.500"
             size="xl"
           />
         </Stack>
@@ -170,42 +171,42 @@ const ProductScreen = () => {
                     <Text fontSize="xl"> ${product.price}</Text>
                     <Flex>
                       <HStack spacing="2px">
-                        <StarIcon color="orange.500" />
+                        <StarIcon color="blue.500" />
                         <StarIcon
                           color={
                             product.ratingsAverage >= 2
-                              ? 'orange.500'
+                              ? 'blue.500'
                               : 'gray.200'
                           }
                         />
                         <StarIcon
                           color={
                             product.ratingsAverage >= 3
-                              ? 'orange.500'
+                              ? 'blue.500'
                               : 'gray.200'
                           }
                         />
                         <StarIcon
                           color={
                             product.ratingsAverage >= 4
-                              ? 'orange.500'
+                              ? 'blue.500'
                               : 'gray.200'
                           }
                         />
                         <StarIcon
                           color={
                             product.ratingsAverage >= 5
-                              ? 'orange.500'
+                              ? 'blue.500'
                               : 'gray.200'
                           }
                         />
                       </HStack>
-                      <HStack spacing='1rem'>
+                      <HStack spacing="1rem">
                         <Text
                           fontSize="md"
                           fontWeight="bold"
                           ml="4px"
-                          color="orange.500"
+                          color="blue.500"
                         >
                           {product.ratingsAverage}
                         </Text>
@@ -214,11 +215,12 @@ const ProductScreen = () => {
                           fontSize="md"
                           fontWeight="bold"
                           ml="4px"
-                        >(
-                          {product.ratingsQuantity}
+                        >
+                          ({product.ratingsQuantity}
                           {product.ratingsQuantity > 1
                             ? ' Reviews'
-                            : ' Review'})
+                            : ' Review'}
+                          )
                         </Text>
                       </HStack>
                     </Flex>
@@ -259,7 +261,7 @@ const ProductScreen = () => {
                   </Flex>
                   <Button
                     isDisabled={product.stock === 0}
-                    colorScheme="orange"
+                    colorScheme="blue"
                     onClick={addItem}
                   >
                     Add To Cart
@@ -318,7 +320,7 @@ const ProductScreen = () => {
                     isDisabled={hasUserReviewed()}
                     my="20px"
                     w="140px"
-                    colorScheme="orange"
+                    colorScheme="blue"
                     onClick={() => {
                       setReviewBoxOpen((prevState) => !prevState);
                     }}
@@ -337,7 +339,7 @@ const ProductScreen = () => {
                             setRating(1);
                           }}
                         >
-                          <StarIcon color="orange.500" />
+                          <StarIcon color="blue.500" />
                         </Button>
 
                         <Button
@@ -348,7 +350,7 @@ const ProductScreen = () => {
                         >
                           <StarIcon
                             color={
-                              rating >= 2 ? 'orange.500' : 'gray.200'
+                              rating >= 2 ? 'blue.500' : 'gray.200'
                             }
                           />
                         </Button>
@@ -360,7 +362,7 @@ const ProductScreen = () => {
                         >
                           <StarIcon
                             color={
-                              rating >= 3 ? 'orange.500' : 'gray.200'
+                              rating >= 3 ? 'blue.500' : 'gray.200'
                             }
                           />
                         </Button>
@@ -372,7 +374,7 @@ const ProductScreen = () => {
                         >
                           <StarIcon
                             color={
-                              rating >= 4 ? 'orange.500' : 'gray.200'
+                              rating >= 4 ? 'blue.500' : 'gray.200'
                             }
                           />
                         </Button>
@@ -384,7 +386,7 @@ const ProductScreen = () => {
                         >
                           <StarIcon
                             color={
-                              rating >= 5 ? 'orange.500' : 'gray.200'
+                              rating >= 5 ? 'blue.500' : 'gray.200'
                             }
                           />
                         </Button>
@@ -398,7 +400,7 @@ const ProductScreen = () => {
 
                     <Button
                       width="140px"
-                      colorScheme="orange"
+                      colorScheme="blue"
                       onClick={() => {
                         dispatch(
                           createProductReview(id, review, rating),
@@ -439,32 +441,32 @@ const ProductScreen = () => {
                         </HStack>
 
                         <Flex spacing="2px" alignItems="center">
-                          <StarIcon color="orange.500" />
+                          <StarIcon color="blue.500" />
                           <StarIcon
                             color={
                               review.rating >= 2
-                                ? 'orange.500'
+                                ? 'blue.500'
                                 : 'gray.200'
                             }
                           ></StarIcon>
                           <StarIcon
                             color={
                               review.rating >= 3
-                                ? 'orange.500'
+                                ? 'blue.500'
                                 : 'gray.200'
                             }
                           ></StarIcon>
                           <StarIcon
                             color={
                               review.rating >= 4
-                                ? 'orange.500'
+                                ? 'blue.500'
                                 : 'gray.200'
                             }
                           ></StarIcon>
                           <StarIcon
                             color={
                               review.rating >= 5
-                                ? 'orange.500'
+                                ? 'blue.500'
                                 : 'gray.200'
                             }
                           ></StarIcon>

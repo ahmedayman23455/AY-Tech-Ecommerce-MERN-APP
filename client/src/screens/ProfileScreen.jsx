@@ -7,6 +7,7 @@ import {
   HStack,
   Stack,
   Text,
+  Alert,
   AlertTitle,
   AlertDescription,
   AlertIcon,
@@ -27,6 +28,7 @@ import * as Yup from 'yup';
 import {
   updateProfile,
   resetUpdateSuccess,
+  resetErrorUser,
 } from '../redux/actions/userActions';
 /* ------------------------------------------------------ */
 const ProfileScreen = () => {
@@ -37,6 +39,7 @@ const ProfileScreen = () => {
   const location = useLocation();
 
   useEffect(() => {
+    dispatch(resetErrorUser());
     if (updateSuccess) {
       toast({
         description: 'Profile Saved.',
@@ -121,7 +124,7 @@ const ProfileScreen = () => {
 
                   <Stack spacing="6">
                     <Button
-                      color="orange"
+                      color="blue"
                       size="lg"
                       fontSize="md"
                       isLoading={loading}

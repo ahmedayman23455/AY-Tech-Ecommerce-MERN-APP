@@ -8,6 +8,7 @@ import {
   updateUserProfile,
   resetUpdate,
   setUserOrders,
+  resetError,
 } from '../slices/user';
 import { setErrorFun } from './../utils/setErrorFun';
 
@@ -144,9 +145,13 @@ export const getUserOrders = () => async (dispatch, getState) => {
       '/api/v1/users/getMyOrders',
       config,
     );
-    console.log(response);
+
     dispatch(setUserOrders(response.data));
   } catch (error) {
     setErrorFun(dispatch, error, setError);
   }
+};
+/* --------------------- resetError --------------------- */
+export const resetErrorUser = () => (dispatch) => {
+  dispatch(resetError());
 };

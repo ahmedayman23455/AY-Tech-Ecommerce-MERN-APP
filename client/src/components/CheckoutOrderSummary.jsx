@@ -177,7 +177,7 @@ const CheckoutOrderSummary = () => {
         </Text>
         <Flex
           justifyContent="center"
-          color={mode('orange.500', 'orange.100')}
+          color={mode('blue.500', 'blue.100')}
         >
           <Flex align="center">
             <ChatIcon />

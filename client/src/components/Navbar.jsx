@@ -64,7 +64,7 @@ const ShoppingCartIcon = () => {
         w="5"
         h="5"
         ml="2"
-        bgColor="orange.500"
+        bgColor="blue.500"
         borderRadius="full"
       >
         <Text textAlign="center" w="full" color="white">
@@ -154,7 +154,7 @@ const Navbar = () => {
           >
             <Flex alignItems="center">
               <Icon
-                color={isHovering ? 'cyan.400' : 'orange.400'}
+                color={isHovering ? 'cyan.400' : 'blue.400'}
                 as={GiTechnoHeart}
                 h={6}
                 w={6}
@@ -265,8 +265,8 @@ const Navbar = () => {
                   m={2}
                   fontSize="sm"
                   fontWeight={600}
-                  bg="orange.500"
-                  _hover={{ bg: 'orange.400' }}
+                  bg="blue.500"
+                  _hover={{ bg: 'blue.400' }}
                   color="white"
                   display={{ base: 'none', md: 'flex' }}
                 >

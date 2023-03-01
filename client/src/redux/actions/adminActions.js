@@ -10,7 +10,11 @@ import {
   setDeliveredFlag,
 } from '../slices/admin.js';
 import { setErrorFun } from './../utils/setErrorFun';
-
+import {
+  resetError as resetErrorOfProducts,
+  setProducts,
+  setProductUpdateFlag,
+} from '../slices/products.js';
 /* --------------------- getAllUsers -------------------- */
 export const getAllUsers = () => async (dispatch, getState) => {
   dispatch(setLoading(true));
@@ -60,11 +64,6 @@ export const deleteUser = (userId) => async (dispatch, getState) => {
   } catch (error) {
     setErrorFun(dispatch, error, setError);
   }
-};
-
-/* --------------------- resetError --------------------- */
-export const resetErrorAndRemovel = () => async (dispatch) => {
-  dispatch(resetError());
 };
 
 /* -------------------- getAllOrders -------------------- */
@@ -148,3 +147,109 @@ export const setDelivered =
       setErrorFun(dispatch, error, setError);
     }
   };
+
+/* -------------------- updateProduct ------------------- */
+export const updateProduct =
+  (productId, updatedProduct) => async (dispatch, getState) => {
+    const {
+      user: { userToken },
+    } = getState();
+
+    dispatch(setLoading(true));
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+          'Content-Type': 'application/json',
+        },
+      };
+
+      await axios.patch(
+        `/api/v1/products/${productId}`,
+        updatedProduct,
+        config,
+      );
+
+      const { data: response } = await axios.get(
+        '/api/v1/products',
+        config,
+      );
+
+      console.log(response);
+
+      dispatch(setProducts(response.data));
+      dispatch(setProductUpdateFlag());
+    } catch (error) {
+      setErrorFun(dispatch, error, setError);
+    }
+  };
+
+/* --------------------- deleteProduct --------------------- */
+export const deleteProduct =
+  (productId) => async (dispatch, getState) => {
+    const {
+      user: { userToken },
+    } = getState();
+
+    dispatch(setLoading(true));
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+          'Content-Type': 'application/json',
+        },
+      };
+
+      await axios.delete(`/api/v1/products/${productId}`, config);
+
+      const { data: response } = await axios.get(
+        '/api/v1/products',
+        config,
+      );
+
+      dispatch(setProducts(response.data));
+      dispatch(setProductUpdateFlag());
+      dispatch(resetError());
+    } catch (error) {
+      setErrorFun(dispatch, error, setError);
+    }
+  };
+
+/* -------------------- createProduct ------------------- */
+export const createProduct =
+  (createdProduct) => async (dispatch, getState) => {
+    const {
+      user: { userToken },
+    } = getState();
+
+    dispatch(setLoading(true));
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+          'Content-Type': 'application/json',
+        },
+      };
+
+      await axios.post(`/api/v1/products`, createdProduct, config);
+
+      const { data: response } = await axios.get(
+        '/api/v1/products',
+        config,
+      );
+
+      dispatch(setProducts(response.data));
+      dispatch(setProductUpdateFlag());
+      dispatch(resetError());
+    } catch (error) {
+      setErrorFun(dispatch, error, setError);
+    }
+  };
+
+/* --------------------- resetError --------------------- */
+export const resetErrorAndRemovel = () => async (dispatch) => {
+  dispatch(resetError());
+};

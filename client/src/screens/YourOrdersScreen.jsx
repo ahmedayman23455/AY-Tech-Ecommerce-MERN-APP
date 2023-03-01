@@ -24,15 +24,19 @@ import {
 import { Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { getUserOrders } from '../redux/actions/userActions';
+import {
+  getUserOrders,
+  resetErrorUser,
+} from '../redux/actions/userActions';
 /* ------------------------------------------------------ */
 const YourOrdersScreen = () => {
   const dispatch = useDispatch();
   const location = useLocation();
+
   const { userInfo, loading, error, orders } = useSelector(
     (state) => state.user,
   );
-  console.log(orders);
+
   //   useEffect
   useEffect(() => {
     if (userInfo) {
@@ -57,7 +61,7 @@ const YourOrdersScreen = () => {
               thickness="2px"
               speed="0.65s"
               emptyColor="gray.200"
-              color="orange.500"
+              color="blue.500"
               size="xl"
             />
           </Stack>

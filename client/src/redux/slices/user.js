@@ -24,6 +24,7 @@ export const userSlice = createSlice({
     },
     userLogout: (state) => {
       state.loading = false;
+      state.error = null;
       state.userInfo = null;
       state.userToken = null;
     },
@@ -45,6 +46,10 @@ export const userSlice = createSlice({
       state.orders = payload;
       state.loading = false;
     },
+    resetError: (state) => {
+      state.error = null;
+      state.loading = false;
+    },
   },
 });
 
@@ -56,6 +61,7 @@ export const {
   updateUserProfile,
   resetUpdate,
   setUserOrders,
+  resetError,
 } = userSlice.actions;
 
 export default userSlice.reducer;

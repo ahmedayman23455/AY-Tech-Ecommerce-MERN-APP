@@ -32,7 +32,7 @@ const LandingScreen = () => (
         width={{ lg: 'sm' }}
         transform={{ base: 'translateY(-50%)', lg: 'none' }}
         bg={{
-          base: useColorModeValue('orange.50', 'gray.700'),
+          base: useColorModeValue('blue.50', 'gray.700'),
           lg: 'transparent',
         }}
         mx={{ base: '6', md: '8', lg: '0' }}
@@ -46,7 +46,7 @@ const LandingScreen = () => (
                 as={GiTechnoHeart}
                 h={12}
                 w={12}
-                color={useColorModeValue('orange.500', 'orange.300')}
+                color={useColorModeValue('blue.500', 'blue.300')}
               />
               <Text fontSize="4xl" fontWeight="bold">
                 Tech Lines
@@ -60,14 +60,14 @@ const LandingScreen = () => (
             <Link
               as={ReactLink}
               to="/products"
-              color={useColorModeValue('orange.500', 'orange.300')}
+              color={useColorModeValue('blue.500', 'blue.300')}
               fontWeight="bold"
               fontSize="lg"
             >
               Discover now
             </Link>
             <Icon
-              color={useColorModeValue('orange.500', 'ornage.300')}
+              color={useColorModeValue('blue.500', 'ornage.300')}
               as={FaArrowRight}
             />
           </HStack>

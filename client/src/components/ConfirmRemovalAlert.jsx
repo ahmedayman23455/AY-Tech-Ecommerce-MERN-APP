@@ -40,8 +40,8 @@ const ConfirmRemovalAlert = (props) => {
         <AlertDialogContent>
           <AlertDialogHeader fontSize="lg" fontWeight="bold">
             Delete
-            {itemType === 'user'
-              ? itemToDelete.name
+            {itemType === 'user' || itemType === 'product'
+              ? ' '+  itemToDelete.name
               : itemType === 'order' &&
                 ` ${itemToDelete.username?.split(' ')[0]} Order`}
           </AlertDialogHeader>
@@ -55,9 +55,9 @@ const ConfirmRemovalAlert = (props) => {
               Cancel
             </Button>
             <Button colorScheme="red" onClick={onDeleteItem} ml={3}>
-              Delete
-              {itemType === 'user'
-                ? itemToDelete.name
+              Delete 
+               {itemType === 'user' || itemType === 'product'
+                ? ' '+ itemToDelete.name
                 : itemType === 'order' &&
                   ` ${itemToDelete.username?.split(' ')[0]} Order`}
             </Button>
